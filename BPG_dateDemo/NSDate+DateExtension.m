@@ -127,11 +127,19 @@ static const unsigned componentFlags = (NSCalendarUnitYear| NSCalendarUnitMonth 
     [formatter setDateStyle:NSDateFormatterMediumStyle];
     [formatter setTimeStyle:NSDateFormatterShortStyle];
     [formatter setDateFormat:format]; //@"yyyy年MM月dd日 HH:mm"
-
-    // 毫秒值转化为秒
-    NSDate* date = [NSDate dateWithTimeIntervalSince1970:[timeString doubleValue]/ 1000.0];
+    NSDate* date;
+    //10位是秒 13位是毫秒
+    if (timeString.length >10) { // 毫秒
+        // 毫秒值转化为秒
+        date = [NSDate dateWithTimeIntervalSince1970:[timeString doubleValue]/ 1000.0];
+    }
+    else {
+        date = [NSDate dateWithTimeIntervalSince1970:[timeString doubleValue]];
+    }
     NSString* dateString = [formatter stringFromDate:date];
     return dateString;
+
+
 }
 
 + (NSString *)conversionOriginalTime:(NSString *)originalTime
